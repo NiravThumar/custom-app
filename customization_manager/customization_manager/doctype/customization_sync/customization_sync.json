@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-11-28 13:02:20.883498",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customization_sync_filter",
+  "source_site",
+  "target_site"
+ ],
+ "fields": [
+  {
+   "fieldname": "customization_sync_filter",
+   "fieldtype": "Table",
+   "label": "Customization Sync Filter",
+   "options": "Customization Sync Filter"
+  },
+  {
+   "fieldname": "source_site",
+   "fieldtype": "Data",
+   "label": "Source Site"
+  },
+  {
+   "fieldname": "target_site",
+   "fieldtype": "Data",
+   "label": "Target Site"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-11-29 14:35:03.955349",
+ "modified_by": "Administrator",
+ "module": "Customization Manager",
+ "name": "Customization Sync",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
