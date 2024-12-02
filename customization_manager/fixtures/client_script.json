@@ -1,0 +1,13 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Customization Sync",
+  "enabled": 1,
+  "modified": "2024-11-29 15:40:54.734093",
+  "module": "Customization Manager",
+  "name": "Get Fields",
+  "script": "frappe.ui.form.on('Customization Sync Filter', {\n    document_type: function(frm, cdt, cdn) {\n        var child = locals[cdt][cdn];\n\n        if (child.document_type) {\n            // Fetch field options asynchronously\n            frappe.db.get_doc('DocType', child.document_type)\n                .then(doc => {\n                    let field_options = doc.fields.\n                    filter(field => !['Section Break', 'Column Break','Tab Break'].includes(field.fieldtype)).\n                    map(field => field.fieldname);\n                    console.log(\"option \", field_options);\n                    frm.fields_dict.customization_sync_filter.grid.update_docfield_property(\"field_name\",\"options\",field_options);\n                    // Refresh the field to trigger a re-render\n                    frm.refresh_field('Customization Sync Filter');\n                })\n                .catch(err => {\n                    console.error(\"Error fetching DocType:\", err);\n                });\n        } else {\n            // Clear field_name if no document_type is selected\n            frappe.model.set_value(cdt, cdn, 'field_name', null);\n        }\n    },\n    field_name: function (frm, cdt, cdn) {\n        let child = locals[cdt][cdn];\n\n        if (child.field_name) {\n            // Fetch all values of the selected field from the selected DocType\n            frappe.call({\n                method: \"frappe.client.get_list\",\n                args: {\n                    doctype: child.document_type,\n                    fields: [child.field_name],\n                    limit_page_length: 1000 // Adjust as needed for large datasets\n                },\n                callback: function (response) {\n                    if (response.message) {\n                        let field_values = [...new Set(response.message.map(doc => doc[child.field_name]))];\n\n                        // Update options dynamically in the next field (or do something with the data)\n                        frm.fields_dict.customization_sync_filter.grid.update_docfield_property(\n                            \"field_value\", \"options\", field_values\n                        );\n\n                        frm.refresh_field('customization_sync_filter');\n                    }\n                }\n            });\n        }\n    }\n    \n});",
+  "view": "Form"
+ }
+]

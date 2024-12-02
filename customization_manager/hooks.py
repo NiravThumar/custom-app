@@ -213,3 +213,13 @@ app_license = "MIT"
 # auth_hooks = [
 # 	"customization_manager.auth.validate"
 # ]
+
+
+fixtures = [
+    {
+        "dt": "Client Script",
+        "filters": [
+            ["name", "=", "Get Fields"]
+        ]
+    }
+]
